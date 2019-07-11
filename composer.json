@@ -1,6 +1,6 @@
 {
-    "name": "mileschou/composer-template",
-    "description": "The template for create Composer project",
+    "name": "mileschou/commander",
+    "description": "The command wrapper written by PHP",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MilesChou\\Template\\": "src"
+            "MilesChou\\Commander\\": "src"
         }
     },
     "autoload-dev": {
