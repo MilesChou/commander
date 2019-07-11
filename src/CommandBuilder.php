@@ -2,8 +2,20 @@
 
 namespace MilesChou\Commander;
 
+use BadMethodCallException;
+
 class CommandBuilder
 {
+    /**
+     * @var array
+     */
+    private $arguments = [];
+
+    /**
+     * @var GeneralCommand|null
+     */
+    private $command;
+
     /**
      * @var string
      */
@@ -15,16 +27,22 @@ class CommandBuilder
     private $options = [];
 
     /**
-     * @var array
-     */
-    private $arguments = [];
-
-    /**
      * @param string $entry
+     * @param GeneralCommand|null $command
      */
-    public function __construct(string $entry)
+    public function __construct(string $entry, GeneralCommand $command = null)
     {
         $this->entry = $entry;
+        $this->command = $command;
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (null !== $this->command && method_exists($this->command, $name)) {
+            return $this->command->{$name}(...$arguments);
+        }
+
+        throw new BadMethodCallException("Undefined method '$name'");
     }
 
     /**
