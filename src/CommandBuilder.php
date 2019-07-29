@@ -67,7 +67,11 @@ class CommandBuilder
 
         if (!empty($this->options)) {
             $options = trim(array_reduce($this->options, function ($c, $v) {
-                return $c . ' -' . implode(' ', $v);
+                if (strlen($v[0]) === 1) {
+                    return $c . ' -' . implode(' ', $v);
+                }
+
+                return $c . ' --' . implode(' ', $v);
             }, ''));
 
             $command .= ' ' . $options;
