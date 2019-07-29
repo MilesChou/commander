@@ -88,15 +88,22 @@ class CommandBuilder
 
     /**
      * @param string $option
-     * @param string|null $value
+     * @param array|string|null $value
      * @return CommandBuilder
      */
-    public function option(string $option, string $value = null): CommandBuilder
+    public function option(string $option, $value = null): CommandBuilder
     {
         if (null === $value) {
             $this->options[] = [$option];
-        } else {
-            $this->options[] = [$option, $value];
+            return $this;
+        }
+
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        foreach ($value as $v) {
+            $this->options[] = [$option, $v];
         }
 
         return $this;
